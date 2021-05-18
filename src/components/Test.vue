@@ -59,7 +59,7 @@
       </span>
     </el-dialog>
 
-    <el-table :data="tableData.tableData" style="width: 100%" ref="editItem">
+    <el-table :data="tableData" style="width: 100%" ref="editItem">
       <el-table-column prop="stt" label="#" width="180"> </el-table-column>
       <el-table-column prop="name" label="Nhân viên" width="180">
       </el-table-column>
@@ -101,45 +101,14 @@ export default {
       centerDialogVisible2: false,
     };
   },
-  beforeCreate() {
-    const data = [
-      {
-        stt: 1,
-        cd: "1",
-        name: "Tom",
-        dv: "No. 189, Grove St, Los Angeles",
-      },
-      {
-        stt: 2,
-        cd: "2",
-        name: "Tom",
-        dv: "No. 189, Grove St, Los Angeles",
-      },
-      {
-        stt: 3,
-        cd: "3",
-        name: "Tom",
-        dv: "No. 189, Grove St, Los Angeles",
-      },
-      {
-        stt: 4,
-        cd: "4",
-        name: "Tom",
-        dv: "No. 189, Grove St, Los Angeles",
-      },
-    ];
-    if (!localStorage.getItem("items")) {
-      const parsed = JSON.stringify(data);
-      localStorage.setItem("items", parsed);
-    }
-    console.log(this.tableData);
+  created() {
+    this.getAllUser()
   },
-
   computed: {
     ...mapState(["tableData"]),
   },
   methods: {
-    ...mapActions(["delete1",]),
+    ...mapActions(["delete1","getAllUser"]),
     //   abc() {
     //   this.addItem(this.input)
     // }
