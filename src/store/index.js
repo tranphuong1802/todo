@@ -25,13 +25,7 @@ export default new Vuex.Store({
       console.log(item);
 
     },
-    edit:(state,item) => {
-      const update = state.tableData.find((item, index) => {
-          return index===item
-      })
-      state.tableData=update
-      console.log(update);
-  },
+    
   },
 
   actions: {
@@ -74,9 +68,7 @@ export default new Vuex.Store({
     addItem({ commit }, item) {
       commit('add', item)
     },
-    editItem({ commit }, item) {
-      commit('edit', item)
-    }
+   
 
   }
 })

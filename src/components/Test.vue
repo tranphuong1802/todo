@@ -52,12 +52,12 @@
       width="50%"
       center
     >
-      <el-input placeholder="Sửa tên nhân viên" v-model="hehe.name"></el-input>
-      <el-input placeholder="Sửa chức danh" v-model="hehe.cd"></el-input>
-      <el-input placeholder="Sửa đơn vị" v-model="hehe.dv"></el-input>
+      <el-input placeholder="Sửa tên nhân viên" v-model="name"></el-input>
+      <el-input placeholder="Sửa chức danh" v-model="cd"></el-input>
+      <el-input placeholder="Sửa đơn vị" v-model="dv"></el-input>
       <span slot="footer" class="dialog-footer">
         <el-button @click="centerDialogVisible2 = false">Cancel</el-button>
-        <el-button type="primary" @click="(centerDialogVisible2 = false), bcd()"
+        <el-button type="primary" @click="(centerDialogVisible2 = false), forceUpdate()"
           >Confirm</el-button
         >
       </span>
@@ -83,6 +83,7 @@
             icon="el-icon-edit"
             circle
             @click="(centerDialogVisible2 = true), editItem(scope.$index)"
+
           ></el-button>
         </template>
       </el-table-column>
@@ -96,6 +97,7 @@ export default {
   data() {
     return {
       input: {},
+      form:{},
       stt: "",
       name: "",
       cd: "",
@@ -111,14 +113,39 @@ export default {
     ...mapState(["tableData"]),
   },
   methods: {
-    ...mapActions(["delete1", "getAllUser", "addItem", "editItem"]),
+    ...mapActions(["delete1", "getAllUser", "addItem"]),
     abc() {
       this.addItem(this.input), (this.input = {});
     },
-    bcd(a) {
-      let index = this.tableData.find((item, index) => index === a);
-     
+    
+    // editItemCom(row){
+    //   this.form.name = row.name,
+    //   this.form.cd = row.cd,
+    //   this.form.dv = row.dv
+    // }
+    editItem(a) {
+      const index = this.tableData.find((item, index) => index === a);
+      this.name = index.name;
+      this.cd = index.cd;
+      this.dv = index.dv;
+      this.stt = index.stt;
     },
+
+    forceUpdate() {
+      this.tableData.forEach((items) => {
+        if (items.stt == this.stt) {
+          items.cd = this.cd;
+          items.name = this.name;
+          items.dv = this.dv;
+        }
+      });
+      this.saveItems();
+    },
+     saveItems() {
+      const parsed = JSON.stringify(this.tableData);
+      localStorage.setItem("items", parsed);
+    },
+
   },
 };
 </script>
