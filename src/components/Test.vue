@@ -11,7 +11,6 @@
         style="width: 200px; margin-left: 50px"
         placeholder="search..."
         @keyup.enter.native="checkEnter()"
-        
       ></el-input>
     </div>
 
@@ -21,7 +20,6 @@
       width="50%"
       center
     >
-    
       <el-input
         type="text"
         hidden
@@ -33,10 +31,17 @@
         placeholder="Nhập chức danh"
         v-model="input.cd"
       ></el-input>
-      <el-input type="text" placeholder="Nhập đơn vị" v-model="input.dv"></el-input>
+      <el-input
+        type="text"
+        placeholder="Nhập đơn vị"
+        v-model="input.dv"
+      ></el-input>
       <span slot="footer" class="dialog-footer">
         <el-button @click="centerDialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="(centerDialogVisible = false), abc()"
+        <el-button
+          type="primary"
+          value="Reset Form"
+          @click="(centerDialogVisible = false), abc()"
           >Save</el-button
         >
       </span>
@@ -45,15 +50,14 @@
       title="Sửa nhân sự"
       :visible.sync="centerDialogVisible2"
       width="50%"
-      center>
-      <el-input placeholder="Sửa tên nhân viên" v-model="name"></el-input>
-      <el-input placeholder="Sửa chức danh" v-model="cd"></el-input>
-      <el-input placeholder="Sửa đơn vị" v-model="dv"></el-input>
+      center
+    >
+      <el-input placeholder="Sửa tên nhân viên" v-model="hehe.name"></el-input>
+      <el-input placeholder="Sửa chức danh" v-model="hehe.cd"></el-input>
+      <el-input placeholder="Sửa đơn vị" v-model="hehe.dv"></el-input>
       <span slot="footer" class="dialog-footer">
         <el-button @click="centerDialogVisible2 = false">Cancel</el-button>
-        <el-button
-          type="primary"
-          @click="(centerDialogVisible2 = false), forceUpdate()"
+        <el-button type="primary" @click="(centerDialogVisible2 = false), bcd()"
           >Confirm</el-button
         >
       </span>
@@ -91,8 +95,7 @@ import { mapActions, mapState } from "vuex";
 export default {
   data() {
     return {
-      
-      input:{},
+      input: {},
       stt: "",
       name: "",
       cd: "",
@@ -102,18 +105,21 @@ export default {
     };
   },
   created() {
-    this.getAllUser()
+    this.getAllUser();
   },
   computed: {
     ...mapState(["tableData"]),
   },
   methods: {
-    ...mapActions(["delete1","getAllUser"]),
-    //   abc() {
-    //   this.addItem(this.input)
-    // }
+    ...mapActions(["delete1", "getAllUser", "addItem", "editItem"]),
+    abc() {
+      this.addItem(this.input), (this.input = {});
+    },
+    bcd(a) {
+      let index = this.tableData.find((item, index) => index === a);
+     
+    },
   },
-  
 };
 </script>
 
